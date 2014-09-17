@@ -50,23 +50,26 @@ chromep.tabs = (function(){
   }
 
   function captureVisibleTab(windowId, options){
-    if(windowId instanceof Object){
-      options = windowId;
-      chrome.tabs.captureVisibleTab(options, function(dataUrl){
-        resolve(dataUrl);
-      });
-    }else{
-      chrome.tabs.captureVisibleTab(windowId, options, function(dataUrl){
-        resolve(dataUrl);
-      });
-    }
+    return new Promise(function(resolve, reject){
+      if(windowId instanceof Object){
+        options = windowId;
+        chrome.tabs.captureVisibleTab(options, function(dataUrl){
+          resolve(dataUrl);
+        });
+      }else{
+        chrome.tabs.captureVisibleTab(windowId, options, function(dataUrl){
+          resolve(dataUrl);
+        });
+      }
+    });
   }
 
   return {
     get : get,
     getCurrent : getCurrent,
-    executeScript : executeScript
-  }
+    executeScript : executeScript,
+    captureVisibleTab : captureVisibleTab
+  };
 })();
 
 chromep.storage = (function(){
