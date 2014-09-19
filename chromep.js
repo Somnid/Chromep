@@ -110,3 +110,19 @@ chromep.storage = (function(){
   };
 
 })();
+
+chromep.notifications = (function(){
+
+  function create(notificationId, options){
+    return new Promise(function(resolve, reject){
+      chrome.notifications.create(notificationId, options, function(id){
+        resolve(id);
+      });
+    });
+  }
+
+  return {
+    create : create
+  };
+
+})();
