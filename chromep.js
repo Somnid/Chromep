@@ -1,5 +1,26 @@
 var chromep = {}
 
+chromep.app = (function(){
+
+  var window = (function(){
+    function create(url, options){
+      return new Promise(function(resolve, reject){
+        chrome.app.window.create(url, options, function(createdWindow){
+          resolve(createdWindow);
+        });
+      });
+    }
+    return {
+      create : create
+    };
+  })();
+
+  return {
+    window : window
+  };
+
+})();
+
 chromep.runtime = (function(){
 
   function sendMessage(extensionId, message, options){
